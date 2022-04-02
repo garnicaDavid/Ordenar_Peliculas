@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Clase servicio.
 package Servicios;
 
 import Entidades.Pelicula;
@@ -24,14 +20,30 @@ public class PeliculaServicios {
     //Creamos la pelicula con su Titulo, Director y duración en horas.
     public Pelicula crearPelicula(){
         Pelicula peli = new Pelicula();
-    boolean trueFalse = false;
         System.out.print("Titulo : ");
         peli.setTitulo(input.next());
         System.out.print("Director : ");
         peli.setDirector(input.next());
-        System.out.print("Duración en Horas (0,0,0) : ");
-        String hora = input.next();
-        //Le damos un formato en horas 00:00:00
+        
+        String hora;
+        boolean trueFalse = false;
+        //Nos aseguramos que la hora no contenga letras.
+        //En el caso de que si, le pediremos que vuelva a ingresar la hora.
+        do{
+           System.out.print("Duración en Horas 0,0,0 : ");
+           hora = input.next();
+            for(char i='A';i<='z';i++){
+                if(hora.contains(String.valueOf(i))){
+                   trueFalse = true;
+                    System.out.println("Vuelva a ingresar la hora");
+                    break;
+                } else {
+                    trueFalse = false;
+                }
+            }
+        }
+        while(trueFalse);
+        //Le damos un formato en horas 00:00:00 con el método "formatoHora()"
         peli.setHora(formatoHora(hora));
     return peli;
     }
@@ -93,7 +105,7 @@ public class PeliculaServicios {
         
     return peliculas;
     }
-    
+    //Mostramos por pantalla la lista ordenada según la opción que elejimos en el menu.
     public void mostrarPantalla(ArrayList<Pelicula> peliculas){
     Iterator <Pelicula> lista = peliculas.iterator();
         while(lista.hasNext()){
@@ -101,7 +113,7 @@ public class PeliculaServicios {
             System.out.println(indexPeli);
     }
     }
-    
+    //Desde el menu eleguimos como lo quiero ordenar.
     public boolean menu(ArrayList<Pelicula> peliculas){
     boolean trueFalse = true;
         System.out.println("------- MENU ------");
@@ -174,7 +186,7 @@ public class PeliculaServicios {
               }
           return formato;
     }
-    //Si existe o no existe un valor usamos isEmpty.
+    //Si existe o no existe la hora usamos isEmpty.
     if(!(hora.isEmpty())){
         if(Integer.parseInt(hora)>=0){
         formato = dc.format(Integer.parseInt(hora))+":00:00";
@@ -187,3 +199,4 @@ public class PeliculaServicios {
     
     
 }
+
